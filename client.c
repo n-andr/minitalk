@@ -25,7 +25,7 @@ void send_int_as_binary(int pid, unsigned int len)
 {
     int	bit;
 
-	bit = sizeof(int) * 8 - 1;
+	bit = sizeof(unsigned int) * 8 - 1;
     while (bit >= 0) {
         if ((len >> bit) & 1) {
             kill(pid, SIGUSR1); // Send SIGUSR1 for a bit of 1

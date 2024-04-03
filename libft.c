@@ -1,42 +1,24 @@
 #include "minitalk.h"
 
-void	write_char(int n, int fd)
+void	write_char(unsigned int n)
 {
 	char	ch;
 
 	ch = n + '0';
-	write (fd, &ch, 1);
+	write (1, &ch, 1);
 }
 
-void	conv_to_char(int nb, int fd)
+void	ft_putnbr(unsigned int n)
 {
-	int	n;
-	int	i;
-	int	n2;
-
-	n = nb;
-	i = 1;
-	while (n > 9)
+	if (n / 10)
 	{
-		n = n / 10;
-		i = i * 10;
+		ft_putnbr(n / 10);
+		ft_putnbr(n % 10);
 	}
-	n = nb;
-	n2 = nb;
-	while (i != 1)
+	else
 	{
-		n = n2 / i;
-		write_char(n, fd);
-		n2 = n2 % i;
-		i = i / 10;
+		write_char(n);
 	}
-	write_char(n2, fd);
-}
-
-void	ft_putnbr_fd(unsigned int n, int fd)
-{
-	if (n >= 0)
-		conv_to_char(n, fd);
 }
 
 int	ft_atoi(const char *str)

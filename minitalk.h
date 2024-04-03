@@ -9,7 +9,7 @@
 
 
 // libft
-void	ft_putnbr_fd(unsigned int n, int fd);
+void	ft_putnbr(unsigned int n);
 int	ft_atoi(const char *str);
 char	*ft_strjoin(char const *s1, char const s2);
 int	ft_strlen(char *str);

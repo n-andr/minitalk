@@ -6,10 +6,10 @@ void	recieve_signal(int signum)
 	static int	bit_count = 7;
 	static char	c = 0;
 	static char *msg = NULL;
-	static int	recieved = 0; // bits and chars
+	static unsigned int	recieved = 0; // bits and chars
 	static int	msg_len = 0;
 
-	if (recieved < sizeof(int) * 8 && msg == NULL)
+	if (recieved < sizeof(unsigned int) * 8 && msg == NULL)
 	{
 		recieved++;
 		if (signum == SIGUSR1)
@@ -57,7 +57,7 @@ void	recieve_signal(int signum)
 int	main()
 {
 	write (1, "Server PID: ", 12);
-	ft_putnbr_fd(getpid(), 1);
+	ft_putnbr(getpid());
 	write (1, "\n", 1);
 	struct sigaction sa;
 
