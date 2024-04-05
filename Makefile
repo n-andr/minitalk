@@ -23,7 +23,7 @@ clean:
 
 fclean: clean
 	rm -f $(SERVER_NAME) $(CLIENT_NAME)
-	
+
 re: fclean all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all clean fclean re
