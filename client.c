@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nandreev <nandreev@student.42berlin.de     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/09 16:49:44 by nandreev          #+#    #+#             */
+/*   Updated: 2024/04/09 20:17:08 by nandreev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
+
 void	send_char_as_binary(int pid, char c)
 {
 	int	bit;
@@ -7,39 +20,46 @@ void	send_char_as_binary(int pid, char c)
 	while (bit >= 0)
 	{
 		if (((c >> bit) & 1) == 1)
-			{
-				kill (pid, SIGUSR1);
-				//write(1, "1", 1);
-			}
+		{
+			kill (pid, SIGUSR1);
+		}
 		else
-			{
-				kill (pid, SIGUSR2);
-				//write(1, "0", 1);
-			}
+		{
+			kill (pid, SIGUSR2);
+		}
 		bit --;
 		usleep(100);
 	}
 }
 
-void send_int_as_binary(int pid, unsigned int len) 
+// Send SIGUSR1 for a bit of 1
+// Send SIGUSR2 for a bit of 0
+// Wait a short interval
+// Move to the next bit
+
+void	send_int_as_binary(int pid, unsigned int len)
 {
-    int	bit;
+	int	bit;
 
 	bit = sizeof(unsigned int) * 8 - 1;
-    while (bit >= 0) {
-        if ((len >> bit) & 1) {
-            kill(pid, SIGUSR1); // Send SIGUSR1 for a bit of 1
-        } else {
-            kill(pid, SIGUSR2); // Send SIGUSR2 for a bit of 0
-        }
-        usleep(100); // Wait a short interval
-        bit--; // Move to the next bit
-    }
+	while (bit >= 0) 
+	{
+		if ((len >> bit) & 1)
+		{
+			kill(pid, SIGUSR1);
+		}
+		else 
+		{
+			kill(pid, SIGUSR2);
+		}
+		usleep(100);
+		bit--;
+	}
 }
 
 void	send_string(int pid, char *string)
 {
-	int	i;
+	int				i;
 	unsigned int	len;
 
 	len = ft_strlen(string);
@@ -50,8 +70,6 @@ void	send_string(int pid, char *string)
 		send_char_as_binary(pid, string[i]);
 		i++;
 	}
-	
-
 }
 
 int	main(int argc, char **argv)
@@ -71,8 +89,5 @@ int	main(int argc, char **argv)
 	}
 	send_string(ft_atoi(argv[1]), argv[2]);
 	send_char_as_binary(ft_atoi(argv[1]), '\0');
-	
-	
-
 	return (0);
 }
