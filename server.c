@@ -6,19 +6,20 @@
 /*   By: nandreev <nandreev@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:53:54 by nandreev          #+#    #+#             */
-/*   Updated: 2024/04/09 16:54:54 by nandreev         ###   ########.fr       */
+/*   Updated: 2024/04/10 13:39:32 by nandreev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-
 #include <stdio.h>
+// bits and chars  -int recieved ; 
+
 void	recieve_signal(int signum)
 {
 	static int	bit_count = 7;
 	static char	c = 0;
 	static char *msg = NULL;
-	static unsigned int	recieved = 0; // bits and chars
+	static unsigned int	recieved = 0;
 	static int	msg_len = 0;
 
 	if (recieved < sizeof(unsigned int) * 8 && msg == NULL)
@@ -68,23 +69,17 @@ void	recieve_signal(int signum)
 
 int	main()
 {
+	struct sigaction sa;
+
 	write (1, "Server PID: ", 12);
 	ft_putnbr(getpid());
 	write (1, "\n", 1);
-	struct sigaction sa;
-
-
     sa.sa_handler = recieve_signal;
     sigemptyset(&sa.sa_mask);
 	sigaddset(&sa.sa_mask, SIGUSR1);
 	sigaddset(&sa.sa_mask, SIGUSR2);
-    // sa.sa_flags = SA_RESTART; /* Restart functions if
-    //                              interrupted by handler */
     sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-
-	// signal(SIGUSR1, recieve_signal);
-	// signal(SIGUSR2, recieve_signal);
 	while (1)
 	{
 		pause();
@@ -93,3 +88,7 @@ int	main()
 }
 //pause() - do nothing before a signal arrives
 //c |= (1 << bit_count); - |= a bitwise OR operation between c and the value on the right side of the operator (1 << bit_count), and then assigns the result back to c
+// signal(SIGUSR1, recieve_signal);
+// signal(SIGUSR2, recieve_signal);
+
+// sa.sa_flags = SA_RESTART; /* Restart functions if interrupted by handler */
