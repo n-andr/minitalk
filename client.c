@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandreev <nandreev@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: Natalia <Natalia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:49:44 by nandreev          #+#    #+#             */
-/*   Updated: 2024/04/10 13:41:09 by nandreev         ###   ########.fr       */
+/*   Updated: 2024/04/21 23:28:10 by Natalia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void	send_int_as_binary(int pid, unsigned int len)
 	int	bit;
 
 	bit = sizeof(unsigned int) * 8 - 1;
-	while (bit >= 0) 
+	while (bit >= 0)
 	{
 		if ((len >> bit) & 1)
 		{
 			kill(pid, SIGUSR1);
 		}
-		else 
+		else
 		{
 			kill(pid, SIGUSR2);
 		}
@@ -88,6 +88,5 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	send_string(ft_atoi(argv[1]), argv[2]);
-	send_char_as_binary(ft_atoi(argv[1]), '\0');
 	return (0);
 }
