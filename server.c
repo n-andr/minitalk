@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Natalia <Natalia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nandreev <nandreev@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:53:54 by nandreev          #+#    #+#             */
-/*   Updated: 2024/04/22 00:07:55 by Natalia          ###   ########.fr       */
+/*   Updated: 2024/04/22 15:24:30 by nandreev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	allocate_message_if_necessary(char **msg, unsigned int msg_len,
 	(*msg) = malloc(sizeof(char) * (msg_len + 1));
 	if (*msg == NULL)
 	{
-		write(1, "memory allocation problem\n", 27);
+		write(1, "memory allocation problem\n", 26);
 		exit(1);
 	}
-	(*msg)[msg_len + 1] = '\0';
+	(*msg)[msg_len] = '\0';
 	*received = 0;
 	return ;
 }
@@ -97,6 +97,8 @@ int	main(void)
 	ft_putnbr(getpid());
 	write (1, "\n", 1);
 	sa.sa_handler = receive_signal;
+	sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
