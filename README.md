@@ -19,6 +19,7 @@ Clone the repository and follow the instructions in the `Makefile` to compile an
 git clone https://github.com/n-andr/minitalk-with-malloc.git
 cd minitalk-with-malloc
 make
+```
 
 ## Usage
 
@@ -27,3 +28,4 @@ To use the program, run the server and client with the appropriate arguments.
 ```bash
 ./server
 ./client <server_pid> <message>
+```
